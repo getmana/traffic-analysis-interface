@@ -3,10 +3,13 @@
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import { Button, Input, Label } from "@/components/ui";
+import type { LoginErrorResponse } from "@/app/api/auth/login/route";
+import { getErrorMessage } from "@/utils";
 
 const signInSchema = z.object({
   email: z.email("Enter a valid email address"),
@@ -20,10 +23,12 @@ type SignInFormProps = {
 };
 
 export function SignInForm({ onSubmit }: SignInFormProps) {
+  const router = useRouter();
   const [passwordVisible, setPasswordVisible] = useState(false);
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors, isSubmitting },
   } = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
@@ -34,8 +39,25 @@ export function SignInForm({ onSubmit }: SignInFormProps) {
       await onSubmit(values);
       return;
     }
-    // TODO: wire up to /v1/auth/login.
-    console.log("Sign-in form submitted", values);
+
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        router.push("/search");
+        return;
+      }
+
+      const body = (await response.json().catch(() => null)) as LoginErrorResponse | null;
+      setError("root", { message: body?.message ?? "Something went wrong. Please try again." });
+    } catch (e: unknown) {
+      const message = getErrorMessage(e);
+      setError("root", { message });
+    }
   });
 
   return (
@@ -87,6 +109,12 @@ export function SignInForm({ onSubmit }: SignInFormProps) {
           </p>
         )}
       </div>
+
+      {errors.root && (
+        <p role="alert" className="text-sm text-destructive">
+          {errors.root.message}
+        </p>
+      )}
 
       <Button type="submit" disabled={isSubmitting} className="mt-2">
         Sign in
