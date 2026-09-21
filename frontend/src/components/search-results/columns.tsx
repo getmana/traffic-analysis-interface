@@ -17,7 +17,7 @@ function getByPath(row: BackendSessionRow, key: string): unknown {
     .reduce<unknown>((acc, part) => (acc && typeof acc === "object" ? (acc as Record<string, unknown>)[part] : undefined), row);
 }
 
-function formatBytes(value: number): string {
+export function formatBytes(value: number): string {
   if (value < 1024) return `${value} B`;
   const units = ["KB", "MB", "GB", "TB"];
   let scaled = value / 1024;
@@ -29,7 +29,7 @@ function formatBytes(value: number): string {
   return `${scaled.toFixed(1)} ${units[unitIndex]}`;
 }
 
-function formatDuration(ms: number): string {
+export function formatDuration(ms: number): string {
   if (ms < 1000) return `${ms}ms`;
   const seconds = ms / 1000;
   if (seconds < 60) return `${seconds.toFixed(1)}s`;
@@ -43,6 +43,14 @@ const RISK_BAND_CLASS: Record<BackendRisk["band"], string> = {
   medium: "text-amber-600 dark:text-amber-400",
   high: "text-destructive",
 };
+
+export function RiskBadge({ risk }: { risk: BackendRisk }) {
+  return (
+    <span className={RISK_BAND_CLASS[risk.band]}>
+      {risk.band} ({risk.score})
+    </span>
+  );
+}
 
 export function formatCellValue(value: unknown, type: string): ReactNode {
   switch (type) {
@@ -59,12 +67,7 @@ export function formatCellValue(value: unknown, type: string): ReactNode {
     }
     case "risk": {
       const r = value as BackendRisk | undefined;
-      if (!r) return "";
-      return (
-        <span className={RISK_BAND_CLASS[r.band]}>
-          {r.band} ({r.score})
-        </span>
-      );
+      return r ? <RiskBadge risk={r} /> : "";
     }
     case "protocol":
       return typeof value === "string" ? value.toUpperCase() : "";
