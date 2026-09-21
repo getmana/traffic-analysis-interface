@@ -14,9 +14,10 @@ import { loadItems } from './utils/load-items';
 
 type SearchFormProps = {
   onSubmit?: (values: SearchFormSubmitValues) => void | Promise<void>;
+  submitError?: string | null;
 };
 
-export function SearchForm({ onSubmit }: SearchFormProps) {
+export function SearchForm({ onSubmit, submitError }: SearchFormProps) {
   const [sensors, setSensors] = useState<BackendSensor[] | null>(null);
   const [sensorsError, setSensorsError] = useState<string | null>(null);
   const [sensorsAuthError, setSensorsAuthError] = useState(false);
@@ -139,6 +140,12 @@ export function SearchForm({ onSubmit }: SearchFormProps) {
             Add condition
           </Button>
         </div>
+      )}
+
+      {submitError && (
+        <p role="alert" className="text-sm text-destructive">
+          {submitError}
+        </p>
       )}
 
       <Button type="submit" disabled={isSubmitting || !ready} className="mt-2 self-start">
