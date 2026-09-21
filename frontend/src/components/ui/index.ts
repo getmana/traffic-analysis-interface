@@ -14,3 +14,4 @@ export {
   SelectValue,
 } from "./select";
 export { Checkbox } from "./checkbox";
+export { Progress, ProgressTrack, ProgressIndicator, ProgressLabel, ProgressValue } from "./progress";
