@@ -7,6 +7,7 @@ import { buttonVariants } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import type { BackendSessionDetection } from "@/types";
 
+import { GenericProtocolView } from "./generic-protocol-view";
 import { HttpView } from "./http-view";
 import { useProtocolSchema } from "./use-protocol-schema";
 import { SessionDetailError, useSession } from "./use-session";
@@ -127,10 +128,7 @@ export function SessionDetailView({ sessionId, searchId }: { sessionId: string; 
             Failed to load protocol schema.
           </p>
         ) : (
-          // TODO(checkpoint 3): replace with the schema-driven GenericProtocolView.
-          <pre className="overflow-x-auto rounded-lg border border-input bg-muted/30 p-3 text-xs">
-            {JSON.stringify(data.decoded, null, 2)}
-          </pre>
+          <GenericProtocolView decoded={data.decoded} schema={schema.data} />
         )}
       </div>
     </div>
