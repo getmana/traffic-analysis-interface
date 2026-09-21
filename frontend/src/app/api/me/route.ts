@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
-import { authenticatedBackendFetch,  } from "@/lib/backend";
-import { parseBackendError } from '@/utils';
+import { authenticatedBackendFetch } from "@/lib/backend";
+import { parseBackendError } from "@/utils";
 
 export async function GET() {
   const result = await authenticatedBackendFetch("/v1/me");
@@ -41,7 +41,9 @@ export async function GET() {
     }
     default: {
       const _exhaustive: never = result;
-      throw new Error(`Unhandled authenticatedBackendFetch status: ${(_exhaustive as { status: string }).status}`);
+      throw new Error(
+        `Unhandled authenticatedBackendFetch status: ${(_exhaustive as { status: string }).status}`,
+      );
     }
   }
 }

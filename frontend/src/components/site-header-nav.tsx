@@ -27,9 +27,7 @@ export function SiteHeaderNav() {
               aria-current={isActive ? "page" : undefined}
               className={cn(
                 buttonVariants({ variant: "ghost", size: "sm" }),
-                isActive
-                  ? "text-foreground font-medium"
-                  : "text-muted-foreground"
+                isActive ? "text-foreground font-medium" : "text-muted-foreground",
               )}
             >
               {label}
