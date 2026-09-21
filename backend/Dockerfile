@@ -36,4 +36,4 @@ EXPOSE 8700
 HEALTHCHECK --interval=10s --timeout=3s --start-period=30s --retries=6 \
     CMD ["python", "-c", "import os,sys,urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:' + os.environ.get('CAP_PORT', '8700') + '/v1/health', timeout=2).status == 200 else 1)"]
 
-CMD ["capture_api", "serve"]
+CMD ["capture-api", "serve"]
