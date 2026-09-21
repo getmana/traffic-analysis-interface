@@ -1,5 +1,5 @@
 import { authenticatedJsonProxy } from "@/lib/backend";
 
 export async function GET() {
-  return authenticatedJsonProxy("/v1/me");
+  return authenticatedJsonProxy("/v1/sensors");
 }
