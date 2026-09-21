@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useRouter } from "next/navigation";
 import { flexRender, getCoreRowModel, useReactTable, type ColumnDef } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 
@@ -10,9 +11,11 @@ import type { BackendSessionRow } from "@/types";
 type ResultsTableProps = {
   rows: BackendSessionRow[];
   columns: ColumnDef<BackendSessionRow>[];
+  searchId: string;
 };
 
-export function ResultsTable({ rows, columns }: ResultsTableProps) {
+export function ResultsTable({ rows, columns, searchId }: ResultsTableProps) {
+  const router = useRouter();
   const table = useReactTable({ data: rows, columns, getCoreRowModel: getCoreRowModel() });
   const tableRows = table.getRowModel().rows;
 
@@ -41,11 +44,25 @@ export function ResultsTable({ rows, columns }: ResultsTableProps) {
         <TableBody style={{ display: "grid", height: virtualizer.getTotalSize(), position: "relative" }}>
           {virtualizer.getVirtualItems().map((virtualRow) => {
             const row = tableRows[virtualRow.index];
+            const openSession = () => {
+              router.push(`/session-detail/${row.original.id}?searchId=${searchId}`);
+            };
             return (
               <TableRow
                 key={row.id}
                 data-index={virtualRow.index}
                 ref={virtualizer.measureElement}
+                onClick={openSession}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    openSession();
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Open session: ${row.original.summary}`}
+                className="cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 style={{
                   display: "flex",
                   position: "absolute",

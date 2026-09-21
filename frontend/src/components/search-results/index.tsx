@@ -112,7 +112,7 @@ export function SearchResultsView({ searchId }: { searchId: string }) {
         </p>
       ) : (
         <>
-          <ResultsTable rows={results.rows} columns={tableColumns} />
+          <ResultsTable rows={results.rows} columns={tableColumns} searchId={searchId} />
           <p className="text-sm text-muted-foreground">
             {results.resultsComplete
               ? results.rows.length === 0

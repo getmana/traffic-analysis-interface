@@ -51,3 +51,15 @@ export {
   type BackendSessionRow,
   type BackendSearchResults,
 } from "./searches";
+export {
+  type BackendSeverity,
+  type BackendMitre,
+  type BackendSessionDetection,
+  type BackendFileSource,
+  type BackendCarvedFile,
+  type BackendPcapUnavailableReason,
+  type BackendPcapInfo,
+  type BackendSession,
+  type BackendSchemaField,
+  type BackendProtocolSchema,
+} from "./sessions";

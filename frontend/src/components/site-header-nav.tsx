@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 const links = [
   { href: "/sign-in", label: "Sign in" },
   { href: "/search", label: "Search" },
-  { href: "/session-detail", label: "Session detail" },
 ] as const;
 
 export function SiteHeaderNav() {
