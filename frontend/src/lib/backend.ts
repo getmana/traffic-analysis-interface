@@ -135,8 +135,8 @@ export async function authenticatedBackendFetch(
   return { status: "ok", response };
 }
 
-export async function authenticatedJsonProxy(path: string): Promise<NextResponse> {
-  const result = await authenticatedBackendFetch(path);
+export async function authenticatedJsonProxy(path: string, init: RequestInit = {}): Promise<NextResponse> {
+  const result = await authenticatedBackendFetch(path, init);
 
   switch (result.status) {
     case "no_session":
@@ -168,6 +168,11 @@ export async function authenticatedJsonProxy(path: string): Promise<NextResponse
           { status: response.status },
         );
       }
+
+      if (response.status === 204) {
+        return new NextResponse(null, { status: 204 });
+      }
+      
       const body = await response.json();
       return NextResponse.json(body, { status: 200 });
     }
