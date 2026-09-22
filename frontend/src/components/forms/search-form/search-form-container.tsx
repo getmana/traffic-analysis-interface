@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { IDEMPOTENCY_KEY_HEADER } from "@/constants";
 import type { BackendSearch, SearchFormSubmitValues } from "@/types";
 
-import { SearchForm } from "./index";
+import { SearchForm } from "./search-form-view";
 
 type CreateSearchArgs = {
   values: SearchFormSubmitValues;

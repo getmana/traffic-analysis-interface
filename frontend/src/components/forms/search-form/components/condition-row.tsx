@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui";
 import type { BackendFieldDef, BackendFilterOp } from "@/types";
-import type { SearchFormValues } from "@/components/forms/search-form/search-filter/search-filter";
+import type { SearchFormValues } from "../search-filter/search-filter";
 
 type ConditionRowProps = {
   index: number;

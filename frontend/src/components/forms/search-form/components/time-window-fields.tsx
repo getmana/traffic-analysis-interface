@@ -1,7 +1,7 @@
 import type { FieldErrors, UseFormRegister } from "react-hook-form";
 
 import { Input, Label } from "@/components/ui";
-import type { SearchFormValues } from "@/components/forms/search-form/search-filter/search-filter";
+import type { SearchFormValues } from "../search-filter/search-filter";
 
 type TimeWindowFieldsProps = {
   register: UseFormRegister<SearchFormValues>;

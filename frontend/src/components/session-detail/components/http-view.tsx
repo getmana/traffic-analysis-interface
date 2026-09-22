@@ -1,6 +1,6 @@
-import { formatBytes } from "@/components/search-results/columns";
+import { formatBytes } from "@/components/search-results/components/columns";
 
-import { isRedacted } from "./redaction";
+import { isRedacted } from "../utils";
 
 type HttpBody = {
   length?: string | number;

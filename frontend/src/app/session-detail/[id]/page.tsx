@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-import { SessionDetailView } from "@/components/session-detail";
+import { SessionDetailView } from "@/components";
 import { getSession } from "@/lib/session";
 
 export const metadata: Metadata = {

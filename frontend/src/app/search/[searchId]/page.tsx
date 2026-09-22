@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-import { SearchResultsView } from "@/components/search-results";
+import { SearchResultsView } from "@/components";
 import { getSession } from "@/lib/session";
 
 export const metadata: Metadata = {

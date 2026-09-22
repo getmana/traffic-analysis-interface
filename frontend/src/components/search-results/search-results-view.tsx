@@ -15,12 +15,8 @@ import {
 import { cn } from "@/lib/utils";
 import type { BackendSortKey } from "@/types";
 
-import { buildColumnDefs } from "./columns";
-import { ProgressPanel } from "./progress-panel";
-import { ResultsTable } from "./results-table";
-import { useColumns } from "./use-columns";
-import { useSearchResults } from "./use-search-results";
-import { SearchStatusError, useSearchStatus } from "./use-search-status";
+import { ProgressPanel, buildColumnDefs, ResultsTable } from "./components";
+import { useColumns, useSearchResults, useSearchStatus, SearchStatusError } from "./hooks";
 
 const SORT_OPTIONS: { value: BackendSortKey; label: string }[] = [
   { value: "-ts", label: "Newest first" },

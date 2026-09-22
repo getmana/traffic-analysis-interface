@@ -1,6 +1,6 @@
 import type { BackendProtocolSchema } from "@/types";
 
-import { resolveSchemaFieldValue } from "./resolve-schema-field-value";
+import { resolveSchemaFieldValue } from "../utils";
 
 export function GenericProtocolView({
   decoded,

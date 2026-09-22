@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-import { SearchFormContainer } from "@/components/forms/search-form/search-form-container";
+import { SearchFormContainer } from "@/components";
 import { getSession } from "@/lib/session";
 
 export const metadata: Metadata = {

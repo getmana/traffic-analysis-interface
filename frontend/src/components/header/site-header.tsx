@@ -1,4 +1,4 @@
-import { SiteHeaderNav } from "@/components/site-header-nav";
+import { SiteHeaderNav } from "@/components/header/site-header-nav";
 
 export function SiteHeader() {
   return (

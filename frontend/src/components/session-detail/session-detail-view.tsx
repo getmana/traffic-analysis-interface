@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 
-import { RiskBadge, formatBytes, formatDuration } from "@/components/search-results/columns";
+import { RiskBadge, formatBytes, formatDuration } from "@/components/search-results/components";
 import { buttonVariants } from "@/components/ui";
 import { cn } from "@/lib/utils";
 import type { BackendSessionDetection } from "@/types";
 
-import { GenericProtocolView } from "./generic-protocol-view";
-import { HttpView } from "./http-view";
-import { useProtocolSchema } from "./use-protocol-schema";
-import { SessionDetailError, useSession } from "./use-session";
+import { GenericProtocolView, HttpView } from "./components";
+import { useProtocolSchema, useSession, SessionDetailError } from "./hooks";
 
 const SEVERITY_CLASS: Record<BackendSessionDetection["severity"], string> = {
   low: "text-foreground",

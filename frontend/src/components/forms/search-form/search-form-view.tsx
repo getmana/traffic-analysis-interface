@@ -6,7 +6,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 
 
 import { Button } from "@/components/ui";
-import { buildFilterCond, searchFormSchema, type SearchFormValues } from "@/components/forms/search-form/search-filter/search-filter";
+import { buildFilterCond, searchFormSchema, type SearchFormValues } from "./search-filter/search-filter";
 import type { BackendFieldDef, BackendSensor, SearchFormSubmitValues } from "@/types";
 
 import { CapturePointPicker, ConditionRow, DataSection, TimeWindowFields } from "./components";

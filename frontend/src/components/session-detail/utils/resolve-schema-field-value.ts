@@ -1,6 +1,6 @@
 import type { BackendSchemaField } from "@/types";
 
-import { isRedacted } from "./redaction";
+import { isRedacted } from "./is-redacted";
 
 function resolvePathSegments(value: unknown, segments: string[]): unknown[] {
   if (segments.length === 0) return [value];

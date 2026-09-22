@@ -4,7 +4,7 @@ import { useController, type Control } from "react-hook-form";
 
 import { Checkbox, Label } from "@/components/ui";
 import type { BackendSensor } from "@/types";
-import type { SearchFormValues } from "@/components/forms/search-form/search-filter/search-filter";
+import type { SearchFormValues } from "../search-filter/search-filter";
 
 const MAX_SENSORS = 5;
 
