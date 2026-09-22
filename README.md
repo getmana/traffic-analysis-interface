@@ -63,9 +63,43 @@ If a search comes back empty, try the search form's time window at that range.
   - The Back button only renders when `searchId` is present, so opening a session detail link
     directly doesn't render the button.
 
+- **The compromised machine**: `ws-hb-009.quillmere.example` (10.20.40.18, on the `harbor-branch`
+  capture point). Spot it in the interface at
+  [`/session-detail/144115231037063169`](http://localhost:3000/session-detail/144115231037063169)
+  — its one `smb_mass_read` session, the single clearest piece of evidence.
+
+  How to reproduce this in the built UI (Search screen → condition builder → results table →
+  Session detail — the only screens used, no backend source read to get the answer):
+  1. Search with all 3 capture points, the full time window, one condition: Field **Detection
+     rule**, Operator **exists**. Comes back with 5,000+ matches — detections alone are far too
+     noisy to read one by one (this is the brief's "things that look suspicious and are harmless").
+  2. Narrow the same condition to Operator **eq**, Value **periodic_tls_beacon**. Scroll the
+     results table's **Source** column: `ws-hb-009.quillmere.example` appears far more often than
+     any other host. Click a couple of its rows into Session detail — same destination every time,
+     `203.0.113.201:443`, flagged high risk for a self-signed cert, a CN/SNI mismatch, and a rare
+     domain.
+  3. Re-run the same search and open a couple of rows for the *other* hosts that also trip
+     `periodic_tls_beacon` (e.g. `ws-hq-081.quillmere.example`) — their destination is
+     `updates.vendor.example` every time, a shared vendor-update endpoint. They're tripping the
+     same heuristic against a legitimate, widely-used service, not talking to unique C2
+     infrastructure. Ruled out.
+  4. New search, same condition, Value **smb_mass_read**. Exactly one result, and it's
+     `ws-hb-009` again — a mass file read against `\\FS01\finance$`, MITRE T1039 (Data from
+     Network Shared Drive). This is the smoking gun linked above.
+  5. New search, same condition, Value **lookalike_sender**. Exactly one result: a phishing email
+     from `quillrnere-freight.example` (a typosquat — "rn" standing in for "m") to
+     `jarek.bellmark@quillmere.example`, with a macro-enabled `.xlsm` attachment, timestamped about
+     2.5 hours before `ws-hb-009`'s first beacon — the likely initial-access vector.
+  - Also ruled out: `scan-it-01.quillmere.example` dominates `port_scan` (200 hits) but is clearly
+    a sanctioned internal scanner by name, with no other correlated detection anywhere in its
+    history. `cleartext_credentials` and `rare_user_agent` are both spread thinly across 100+ hosts
+    with 1–4 hits each — generic background noise, no standout host.
+  - Honesty note: investigation was done by Claude, but every step is what
+    the built Search form's condition builder and results table support, and is reproducible by
+    hand in the running app.
+
 ### What's not done - ran out of time
 
-- The compromised-machine investigation. 
 - SSE/WebSocket live feed, PCAP/file download, saved queries — explicitly optional in the brief, skipped in favor of finishing the three required screens properly rather than starting all of them.
 
 
