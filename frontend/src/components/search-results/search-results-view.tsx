@@ -86,7 +86,11 @@ export function SearchResultsView({ searchId }: { searchId: string }) {
 
       <div className="flex items-center justify-between">
         <span className="text-sm font-medium text-foreground">Results</span>
-        <Select value={sort} onValueChange={(value) => setSort(value as BackendSortKey)} disabled={!canSort}>
+        <Select
+          value={sort}
+          onValueChange={(value) => setSort(value as BackendSortKey)}
+          disabled={!canSort}
+        >
           <SelectTrigger size="sm">
             <SelectValue />
           </SelectTrigger>

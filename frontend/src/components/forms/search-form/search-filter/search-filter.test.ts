@@ -41,10 +41,9 @@ const protocolField: BackendFieldDef = {
 
 describe("buildFilterCond", () => {
   it("builds an exists condition with no value/values", () => {
-    const cond = buildFilterCond(
-      { field: "src.ip", op: "exists", value: "", valuesText: "" },
-      [ipField],
-    );
+    const cond = buildFilterCond({ field: "src.ip", op: "exists", value: "", valuesText: "" }, [
+      ipField,
+    ]);
     expect(cond).toEqual({ field: "src.ip", op: "exists" });
   });
 
@@ -73,10 +72,9 @@ describe("buildFilterCond", () => {
   });
 
   it("builds a single-value condition with numeric coercion for a numeric field type", () => {
-    const cond = buildFilterCond(
-      { field: "dst.port", op: "eq", value: "443", valuesText: "" },
-      [portField],
-    );
+    const cond = buildFilterCond({ field: "dst.port", op: "eq", value: "443", valuesText: "" }, [
+      portField,
+    ]);
     expect(cond).toEqual({ field: "dst.port", op: "eq", value: 443 });
   });
 });

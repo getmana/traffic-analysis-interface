@@ -23,7 +23,11 @@ const conditionRowSchema = z
       case "in": {
         const items = splitValues(row.valuesText);
         if (items.length < 1) {
-          ctx.addIssue({ path: ["valuesText"], code: "custom", message: "Enter at least one value" });
+          ctx.addIssue({
+            path: ["valuesText"],
+            code: "custom",
+            message: "Enter at least one value",
+          });
         }
         if (items.length > 50) {
           ctx.addIssue({ path: ["valuesText"], code: "custom", message: "At most 50 values" });
@@ -93,7 +97,11 @@ export function buildFilterCond(row: SearchConditionRow, fieldDefs: BackendField
     case "exists":
       return { field: row.field, op: "exists" };
     case "in":
-      return { field: row.field, op: "in", values: splitValues(row.valuesText).map((v) => coerceValue(v, fieldDef)) };
+      return {
+        field: row.field,
+        op: "in",
+        values: splitValues(row.valuesText).map((v) => coerceValue(v, fieldDef)),
+      };
     case "between":
       return {
         field: row.field,

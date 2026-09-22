@@ -1,7 +1,13 @@
 import type { ReactNode } from "react";
 import type { ColumnDef } from "@tanstack/react-table";
 
-import type { BackendByteCount, BackendColumnDef, BackendEndpoint, BackendRisk, BackendSessionRow } from "@/types";
+import type {
+  BackendByteCount,
+  BackendColumnDef,
+  BackendEndpoint,
+  BackendRisk,
+  BackendSessionRow,
+} from "@/types";
 
 const COLUMN_KEY_ALIASES: Record<string, string> = {
   sensor: "sensor_id",
@@ -14,7 +20,11 @@ function getByPath(row: BackendSessionRow, key: string): unknown {
   const resolvedKey = COLUMN_KEY_ALIASES[key] ?? key;
   return resolvedKey
     .split(".")
-    .reduce<unknown>((acc, part) => (acc && typeof acc === "object" ? (acc as Record<string, unknown>)[part] : undefined), row);
+    .reduce<unknown>(
+      (acc, part) =>
+        acc && typeof acc === "object" ? (acc as Record<string, unknown>)[part] : undefined,
+      row,
+    );
 }
 
 export function formatBytes(value: number): string {

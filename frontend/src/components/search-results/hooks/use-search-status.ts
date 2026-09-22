@@ -18,7 +18,10 @@ async function fetchSearchStatus(searchId: string): Promise<BackendSearch> {
   const response = await fetch(`/api/searches/${searchId}`);
   const body = await response.json();
   if (!response.ok || body.ok === false) {
-    throw new SearchStatusError(body.error ?? "unexpected_error", body.message ?? "Something went wrong.");
+    throw new SearchStatusError(
+      body.error ?? "unexpected_error",
+      body.message ?? "Something went wrong.",
+    );
   }
   return body as BackendSearch;
 }

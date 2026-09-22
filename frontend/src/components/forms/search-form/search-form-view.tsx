@@ -4,13 +4,16 @@ import { useCallback, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 
-
 import { Button } from "@/components/ui";
-import { buildFilterCond, searchFormSchema, type SearchFormValues } from "./search-filter/search-filter";
+import {
+  buildFilterCond,
+  searchFormSchema,
+  type SearchFormValues,
+} from "./search-filter/search-filter";
 import type { BackendFieldDef, BackendSensor, SearchFormSubmitValues } from "@/types";
 
 import { CapturePointPicker, ConditionRow, DataSection, TimeWindowFields } from "./components";
-import { loadItems } from './utils/load-items';
+import { loadItems } from "./utils/load-items";
 
 type SearchFormProps = {
   onSubmit?: (values: SearchFormSubmitValues) => void | Promise<void>;
@@ -103,7 +106,12 @@ export function SearchForm({ onSubmit, submitError }: SearchFormProps) {
   return (
     <form onSubmit={submit} noValidate className="mt-6 flex max-w-3xl flex-col gap-4">
       {sensors === null ? (
-        <DataSection error={sensorsError} authError={sensorsAuthError} onRetry={loadSensors} label="capture points" />
+        <DataSection
+          error={sensorsError}
+          authError={sensorsAuthError}
+          onRetry={loadSensors}
+          label="capture points"
+        />
       ) : (
         <CapturePointPicker control={control} sensors={sensors} />
       )}
@@ -111,7 +119,12 @@ export function SearchForm({ onSubmit, submitError }: SearchFormProps) {
       <TimeWindowFields register={register} errors={errors} />
 
       {fields === null ? (
-        <DataSection error={fieldsError} authError={fieldsAuthError} onRetry={loadFields} label="fields" />
+        <DataSection
+          error={fieldsError}
+          authError={fieldsAuthError}
+          onRetry={loadFields}
+          label="fields"
+        />
       ) : (
         <div className="flex flex-col gap-2">
           <span className="text-sm font-medium text-foreground">Conditions</span>
@@ -154,5 +167,3 @@ export function SearchForm({ onSubmit, submitError }: SearchFormProps) {
     </form>
   );
 }
-
-

@@ -18,7 +18,10 @@ async function fetchSession(sessionId: string): Promise<BackendSession> {
   const response = await fetch(`/api/sessions/${sessionId}`);
   const body = await response.json();
   if (!response.ok || body.ok === false) {
-    throw new SessionDetailError(body.error ?? "unexpected_error", body.message ?? "Something went wrong.");
+    throw new SessionDetailError(
+      body.error ?? "unexpected_error",
+      body.message ?? "Something went wrong.",
+    );
   }
   return body as BackendSession;
 }

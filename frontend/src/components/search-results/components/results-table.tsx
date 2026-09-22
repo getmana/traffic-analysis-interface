@@ -30,7 +30,10 @@ export function ResultsTable({ rows, columns, searchId }: ResultsTableProps) {
   return (
     <div ref={parentRef} className="relative h-[70vh] overflow-auto rounded-md border">
       <Table style={{ display: "grid" }}>
-        <TableHeader style={{ display: "grid", position: "sticky", top: 0, zIndex: 1 }} className="bg-background">
+        <TableHeader
+          style={{ display: "grid", position: "sticky", top: 0, zIndex: 1 }}
+          className="bg-background"
+        >
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id} style={{ display: "flex", width: "100%" }}>
               {headerGroup.headers.map((header) => (
@@ -41,7 +44,9 @@ export function ResultsTable({ rows, columns, searchId }: ResultsTableProps) {
             </TableRow>
           ))}
         </TableHeader>
-        <TableBody style={{ display: "grid", height: virtualizer.getTotalSize(), position: "relative" }}>
+        <TableBody
+          style={{ display: "grid", height: virtualizer.getTotalSize(), position: "relative" }}
+        >
           {virtualizer.getVirtualItems().map((virtualRow) => {
             const row = tableRows[virtualRow.index];
             const openSession = () => {
@@ -71,7 +76,11 @@ export function ResultsTable({ rows, columns, searchId }: ResultsTableProps) {
                 }}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} style={{ width: cell.column.getSize() }} className="truncate">
+                  <TableCell
+                    key={cell.id}
+                    style={{ width: cell.column.getSize() }}
+                    className="truncate"
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

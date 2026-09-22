@@ -32,6 +32,6 @@ export function DataSection({ error, authError, onRetry, label }: DataSectionPro
       </div>
     );
   }
-  
+
   return <p className="text-sm text-muted-foreground">Loading {label}…</p>;
 }

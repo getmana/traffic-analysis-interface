@@ -138,7 +138,9 @@ export function ConditionRow({
                 {...register(`conditions.${index}.valuesText`)}
               />
               {hasEnum && (
-                <p className="text-sm text-muted-foreground">Allowed: {fieldDef!.enum!.join(", ")}</p>
+                <p className="text-sm text-muted-foreground">
+                  Allowed: {fieldDef!.enum!.join(", ")}
+                </p>
               )}
             </>
           ) : hasEnum ? (

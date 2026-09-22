@@ -1,4 +1,3 @@
-
 type LoadState<T> = {
   items: T[] | null;
   error: string | null;

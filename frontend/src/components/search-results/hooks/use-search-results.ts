@@ -36,7 +36,8 @@ async function refetchLastPage(
   sort: BackendSortKey,
 ): Promise<void> {
   const queryKey = resultsQueryKey(searchId, sort);
-  const current = queryClient.getQueryData<InfiniteData<BackendSearchResults, string | null>>(queryKey);
+  const current =
+    queryClient.getQueryData<InfiniteData<BackendSearchResults, string | null>>(queryKey);
   if (!current || current.pages.length === 0) return;
   const lastIndex = current.pages.length - 1;
   const lastPageParam = current.pageParams[lastIndex];
@@ -47,7 +48,11 @@ async function refetchLastPage(
   });
 }
 
-export function useSearchResults(searchId: string, sort: BackendSortKey, searchState: BackendSearchState) {
+export function useSearchResults(
+  searchId: string,
+  sort: BackendSortKey,
+  searchState: BackendSearchState,
+) {
   const queryClient = useQueryClient();
 
   const query = useInfiniteQuery({

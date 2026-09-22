@@ -26,7 +26,10 @@ function displayLeaf(value: unknown): string {
   return String(value);
 }
 
-export function resolveSchemaFieldValue(decoded: Record<string, unknown>, field: BackendSchemaField): string {
+export function resolveSchemaFieldValue(
+  decoded: Record<string, unknown>,
+  field: BackendSchemaField,
+): string {
   const leaves = resolvePathSegments(decoded, field.path.split("."));
   return leaves.length === 0 ? "—" : leaves.map(displayLeaf).join(", ");
 }

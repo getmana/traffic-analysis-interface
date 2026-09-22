@@ -16,7 +16,13 @@ const SEVERITY_CLASS: Record<BackendSessionDetection["severity"], string> = {
   high: "text-destructive",
 };
 
-export function SessionDetailView({ sessionId, searchId }: { sessionId: string; searchId?: string }) {
+export function SessionDetailView({
+  sessionId,
+  searchId,
+}: {
+  sessionId: string;
+  searchId?: string;
+}) {
   const session = useSession(sessionId);
   const schema = useProtocolSchema(session.data?.protocol);
 
@@ -65,7 +71,8 @@ export function SessionDetailView({ sessionId, searchId }: { sessionId: string; 
           {data.protocol.toUpperCase()} · {data.decoder} · {data.sensor_id}
         </p>
         <p className="text-sm text-muted-foreground">
-          {data.src.host ?? data.src.ip}:{data.src.port} → {data.dst.host ?? data.dst.ip}:{data.dst.port}
+          {data.src.host ?? data.src.ip}:{data.src.port} → {data.dst.host ?? data.dst.ip}:
+          {data.dst.port}
         </p>
         <p className="text-sm text-muted-foreground">
           {new Date(data.start).toLocaleString()} – {new Date(data.end).toLocaleString()} (
@@ -111,7 +118,10 @@ export function SessionDetailView({ sessionId, searchId }: { sessionId: string; 
           </ul>
         )}
         <p className="text-sm text-muted-foreground">
-          PCAP: {data.pcap.available ? "available" : `unavailable${data.pcap.reason ? ` (${data.pcap.reason})` : ""}`}
+          PCAP:{" "}
+          {data.pcap.available
+            ? "available"
+            : `unavailable${data.pcap.reason ? ` (${data.pcap.reason})` : ""}`}
         </p>
       </div>
 

@@ -55,7 +55,9 @@ function HeaderTable({ title, headers }: { title: string; headers: Header[] }) {
             <tbody>
               {headers.map((header, index) => (
                 <tr key={`${header.name}-${index}`} className="border-b border-input last:border-0">
-                  <td className="w-1/3 px-3 py-1.5 align-top text-muted-foreground">{header.name}</td>
+                  <td className="w-1/3 px-3 py-1.5 align-top text-muted-foreground">
+                    {header.name}
+                  </td>
                   <td className="px-3 py-1.5 align-top break-all">
                     <HeaderValue value={header.value} />
                   </td>
@@ -104,10 +106,14 @@ export function HttpView({ decoded }: { decoded: Record<string, unknown> }) {
           {http.path}
         </span>
         <span className="text-sm text-muted-foreground">{http.version}</span>
-        <span className="text-sm font-medium text-foreground">{http.status !== undefined ? String(http.status) : ""}</span>
+        <span className="text-sm font-medium text-foreground">
+          {http.status !== undefined ? String(http.status) : ""}
+        </span>
       </div>
 
-      {http.user_agent && <p className="text-sm text-muted-foreground">User agent: {http.user_agent}</p>}
+      {http.user_agent && (
+        <p className="text-sm text-muted-foreground">User agent: {http.user_agent}</p>
+      )}
 
       <HeaderTable title="Request headers" headers={normalizeHeaders(http.request_headers)} />
       <BodySummary title="Request body" body={http.request_body} />

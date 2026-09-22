@@ -41,7 +41,9 @@ export function SearchFormContainer() {
       const search = await mutation.mutateAsync({ values, idempotencyKey: crypto.randomUUID() });
       router.push(`/search/${search.id}`);
     } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setSubmitError(
+        err instanceof Error ? err.message : "Something went wrong. Please try again.",
+      );
     }
   };
 

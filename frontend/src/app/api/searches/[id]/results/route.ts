@@ -15,5 +15,7 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
   }
   const query = forwarded.toString();
 
-  return authenticatedJsonProxy(`/v1/searches/${encodeURIComponent(id)}/results${query ? `?${query}` : ""}`);
+  return authenticatedJsonProxy(
+    `/v1/searches/${encodeURIComponent(id)}/results${query ? `?${query}` : ""}`,
+  );
 }
