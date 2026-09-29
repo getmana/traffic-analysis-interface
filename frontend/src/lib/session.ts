@@ -28,12 +28,12 @@ function requireSessionPassword(): string {
   return value;
 }
 
-function sessionOptions() {
+export function sessionOptions() {
   return {
     password: requireSessionPassword(),
     cookieName: SESSION_COOKIE_NAME,
     cookieOptions: {
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.COOKIE_SECURE === "true",
     },
   };
 }

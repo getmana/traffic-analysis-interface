@@ -1,15 +1,22 @@
 name: capture-api
 
-# The API in a container, if you would rather not install uv.
+# The whole app in containers — no local Node/npm or Python/uv required.
 #
-#   docker compose up -d --build     # http://localhost:8700
+#   docker compose up -d --build     # frontend http://localhost:3000, backend http://localhost:8700
 #   docker compose logs -f
 #   docker compose down
 #
-# Settings live in backend/.env exactly as they do without Docker — copy
-# backend/.env.example and edit it. CAP_HOST and CAP_PORT are fixed here so the
-# published port and the health check stay valid; publish somewhere else with
-# CAP_HOST_PORT=8800 docker compose up -d.
+# Backend settings live in backend/.env exactly as they do without Docker —
+# copy backend/.env.example and edit it. CAP_HOST and CAP_PORT are fixed here
+# so the published port and the health check stay valid; publish somewhere
+# else with CAP_HOST_PORT=8800 docker compose up -d.
+#
+# Frontend settings live in frontend/.env (copy frontend/.env.example) — note
+# BACKEND_API_BASE_URL is set below to the simulator service's Docker-network
+# name, so a value in frontend/.env has no effect under Docker (it only
+# matters when running the frontend locally). SESSION_PASSWORD has a dev-only
+# default below so this works with zero setup; override it in frontend/.env
+# for a different value.
 
 services:
   simulator:
@@ -38,3 +45,38 @@ services:
       timeout: 3s
       retries: 6
       start_period: 30s
+
+  frontend:
+    build:
+      context: ./frontend
+    image: sixth-sense-frontend:local
+    container_name: sixth-sense-frontend
+    init: true
+    restart: unless-stopped
+    stop_grace_period: 5s
+    ports:
+      - "${FRONTEND_HOST_PORT:-3000}:3000"
+    env_file:
+      - path: ./frontend/.env
+        required: false
+    environment:
+      # Docker-network DNS name of the simulator service, not localhost — the
+      # two containers are on separate network namespaces.
+      BACKEND_API_BASE_URL: http://simulator:8700
+      # Dev-only default so `docker compose up -d --build` works with zero
+      # setup; override via frontend/.env for a different value (must stay
+      # >= 32 chars). Never used for anything beyond local/dev in this project.
+      SESSION_PASSWORD: "docker-compose-dev-only-default-session-password-32chars-min"
+    depends_on:
+      simulator:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('http').get('http://127.0.0.1:3000/api/health', (r) => { if (r.statusCode === 200) process.exit(0); else process.exit(1); }).on('error', () => process.exit(1))"
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 15s

@@ -5,6 +5,30 @@
 
 ### How to run
 
+From the repo root:
+
+```bash
+docker compose up -d --build
+```
+
+Brings up both services — no local Node/npm or Python/uv required on the host:
+- Frontend: `http://localhost:3000`
+- Backend: `http://localhost:8700`
+
+Sign in with
+`ana@quillmere.example` / `demo-analyst` (analyst, full access)
+or
+`oli@quillmere.example` / `demo-observer` (observer, sensitive fields redacted).
+
+To stop: `docker compose down`. To override defaults (session secret, ports),
+copy `frontend/.env.example` to `frontend/.env` and/or `backend/.env.example`
+to `backend/.env` first — compose reads these automatically. Note:
+`docker-compose.yml` sets `BACKEND_API_BASE_URL` itself (to the backend's
+container DNS name), so that one value in `frontend/.env` has no effect under
+Docker — it only matters for the local-dev path below.
+
+#### Or run things locally
+
 Backend (from the repo root):
 
 ```bash
@@ -13,7 +37,7 @@ uv sync
 uv run capture-api serve
 ```
 
-or `docker compose up -d --build` from the repo root. Comes up on `http://localhost:8700`.
+Comes up on `http://localhost:8700`.
 
 Frontend:
 
@@ -24,11 +48,7 @@ npm install
 npm run dev
 ```
 
-Comes up on `http://localhost:3000`. 
-Sign in with 
-`ana@quillmere.example` / `demo-analyst` (analyst, full access) 
-or 
-`oli@quillmere.example` / `demo-observer` (observer, sensitive fields redacted).
+Comes up on `http://localhost:3000`.
 
 **Captured data window**: 
 as `backend/.env.example` states —
