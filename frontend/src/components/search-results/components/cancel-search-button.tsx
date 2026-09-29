@@ -13,16 +13,26 @@ async function cancelSearch(searchId: string): Promise<void> {
   }
 }
 
-export function CancelSearchButton({ searchId }: { searchId: string }) {
+export function CancelSearchButton({ searchId, isTerminal }: { searchId: string; isTerminal: boolean }) {
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: () => cancelSearch(searchId),
     onSuccess: () => {
-      queryClient.setQueryData<BackendSearch>(["searches", searchId], (prev) =>
-        prev ? { ...prev, state: "cancelled" } : prev,
-      );
+      if (!isTerminal) {
+        queryClient.setQueryData<BackendSearch>(["searches", searchId], (prev) =>
+          prev ? { ...prev, state: "cancelled" } : prev,
+        );
+      }
     },
   });
+
+  if (mutation.isSuccess && isTerminal) {
+    return (
+      <Button type="button" variant="outline" size="sm" disabled>
+        Deleted
+      </Button>
+    );
+  }
 
   return (
     <Button
@@ -32,7 +42,7 @@ export function CancelSearchButton({ searchId }: { searchId: string }) {
       disabled={mutation.isPending}
       onClick={() => mutation.mutate()}
     >
-      Cancel search
+      {isTerminal ? "Delete search" : "Cancel search"}
     </Button>
   );
 }

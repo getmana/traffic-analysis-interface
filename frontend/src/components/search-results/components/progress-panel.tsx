@@ -21,7 +21,7 @@ export function ProgressPanel({ search }: { search: BackendSearch }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <span className="text-sm font-medium text-foreground">{STATE_LABELS[state]}</span>
-          {!TERMINAL_STATES.has(state) && <CancelSearchButton searchId={id} />}
+          <CancelSearchButton searchId={id} isTerminal={TERMINAL_STATES.has(state)} />
         </div>
         <span className="text-sm text-muted-foreground">
           {progress.matched}
