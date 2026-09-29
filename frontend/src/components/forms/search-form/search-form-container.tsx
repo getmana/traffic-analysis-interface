@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 
 import { IDEMPOTENCY_KEY_HEADER } from "@/constants";
 import type { BackendSearch, SearchFormSubmitValues } from "@/types";
+import { generateId } from "@/utils";
 
 import { SearchForm } from "./search-form-view";
 
@@ -38,7 +39,7 @@ export function SearchFormContainer() {
   const handleSubmit = async (values: SearchFormSubmitValues) => {
     setSubmitError(null);
     try {
-      const search = await mutation.mutateAsync({ values, idempotencyKey: crypto.randomUUID() });
+      const search = await mutation.mutateAsync({ values, idempotencyKey: generateId() });
       router.push(`/search/${search.id}`);
     } catch (err) {
       setSubmitError(
